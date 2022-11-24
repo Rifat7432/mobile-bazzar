@@ -1,0 +1,8 @@
+.categoryText{
+
+}
+.categoryText:hover{
+    color: #f5761b;
+    border-bottom: 2px solid #F4791F;
+    font-weight: 700;
+}
