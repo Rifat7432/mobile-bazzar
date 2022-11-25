@@ -2,15 +2,15 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../../../ContextProvider/AuthProvider';
+import ProductTable from '../ProductTable.jsx/ProductTable';
 
 const MyProduct = () => {
     const {user}=useContext(AuthContext)
-    const role = 'Seller'
-    const { data: sellers = [] ,refetch} = useQuery({
-        queryKey: ["usersSeller"],
+    const { data: products = [] ,refetch} = useQuery({
+        queryKey: ["products",user?.email],
         queryFn: async () => {
           const res = await fetch(
-            `http://localhost:5000/usersSeller/${role}`,
+            `http://localhost:5000/products/${user?.email}`,
             {
               headers: {
                 authorization: `bearer ${localStorage.getItem("token")}`,
@@ -21,9 +21,11 @@ const MyProduct = () => {
           return data;
         },
       });
-      console.log(sellers)
+      console.log(products)
     return (
-        <div>
+        <div className='pt-5'>
+            
+                <ProductTable products={products} refetch={refetch}></ProductTable>
             
         </div>
     );

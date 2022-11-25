@@ -2,8 +2,9 @@ import React from 'react';
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 
-const ProductTableBody = () => {
-   
+const ProductTableBody = ({product,i,refetch}) => {
+   const {img ,productName,resalePrice,status}=product
+console.log(product)
     const handleDelete = () => {
       Swal.fire({
         title: "Are you sure?",
@@ -29,7 +30,7 @@ const ProductTableBody = () => {
                 ` Product  has been deleted.`,
                 "success"
               );
-            //   refetch();
+              refetch();
             });
         }
       });
@@ -37,16 +38,28 @@ const ProductTableBody = () => {
     
     return (
       <tr>
-        <th></th>
-        <td></td>
-        <td></td>
-        <td></td>
+        <th>{i+1}</th>
         <td>
-          <button onClick={handleDelete} className="btn  btn-error btn-circle">
-            <FaTrashAlt></FaTrashAlt>
-          </button>
+        <div className="flex items-center space-x-3">
+          <div className="avatar">
+            <div className="mask mask-squircle w-12 h-12">
+              <img src={img} alt="Avatar Tailwind CSS Component" />
+            </div>
+          </div>
+        </div>
         </td>
-        <td></td>
+        <td>{productName}</td>
+        <td>{resalePrice} tk</td>
+        <td>
+        {status}
+        </td>
+        <td>
+          {status === 'available' && <button className='btn myButton'>Advertise</button>}
+        </td>
+        <td>
+            <button onClick={handleDelete} className="btn  btn-error btn-circle">
+            <FaTrashAlt></FaTrashAlt>
+          </button></td>
       </tr>
     );
 };

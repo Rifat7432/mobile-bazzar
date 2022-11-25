@@ -9,16 +9,17 @@ const ProductTable = ({products ,refetch}) => {
           <thead>
             <tr>
               <th></th>
+              <th>Image</th>
               <th>Name</th>
-              <th>Treatment</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Payment</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th></th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
           {
-            products.map((user,i) =><ProductTableBody key={user._id} user={user} i={i} refetch={refetch}></ProductTableBody> )
+            products.map((product,i) =><ProductTableBody key={product._id} product={product} i={i} refetch={refetch}></ProductTableBody> )
           }
           </tbody>
         </table>
