@@ -12,31 +12,33 @@ const SignUp = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const { signUpByGoogle, signUp, updateUser,removeUser} = useContext(AuthContext);
+  const { signUpByGoogle, signUp, updateUser, removeUser } =
+    useContext(AuthContext);
   const getToken = (email) => {
     fetch(`http://localhost:5000/jwt?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
-        toast.success('Sign up successful')
+        toast.success("Sign up successful");
         localStorage.setItem("token", data.accessToken);
         reset({
-            email: "",
-            password: "",
-          });
+          email: "",
+          password: "",
+          role: "Select one",
+        });
       })
-      .catch(e=>{
+      .catch((e) => {
         removeUser()
-        .then(()=>{
-            toast.error('something is wrong .Please try again !')
-        })
-        .catch(e=>console.error(e))
+          .then(() => {
+            toast.error("something is wrong .Please try again !");
+          })
+          .catch((e) => console.error(e));
       });
   };
-  const addUser = (email, name,role) => {
+  const addUser = (email, name, role) => {
     const user = {
       email,
       name,
-      role
+      role,
     };
     fetch("http://localhost:5000/users", {
       method: "POST",
@@ -52,19 +54,22 @@ const SignUp = () => {
           navigate("/");
         }
       })
-      .catch(e=>{
+      .catch((e) => {
         removeUser()
-        .then(()=>{
-            toast.error('something is wrong .Please try again !')
-        })
-        .catch(e=>console.error(e))
+          .then(() => {
+            toast.error("something is wrong .Please try again !");
+          })
+          .catch((e) => console.error(e));
       });
   };
   const handleSignUp = (data) => {
-    const { name, email, password ,role} = data;
+    const { name, email, password, role } = data;
+    if (role === "" || role === "Select one") {
+      return toString.error("Please select an option");
+    }
     signUp(email, password)
       .then((Result) => {
-        addUser(email, name ,role);
+        addUser(email, name, role);
         updateUser(name);
       })
       .catch((e) => toast.error(e.message));
@@ -115,20 +120,7 @@ const SignUp = () => {
                 })}
               />
             </div>
-            <div className="form-control w-full ">
-              <label className="label">
-                <span className="label-text">Sign Up as</span>
-              </label>
-              <select
-                {...register("role",{ required: "Enter your name" })}
-                className="select select-bordered w-full max-w-xs"
-              >
-                <option selected>hi</option>
-                <option defaultValue={"Bayer"}>Bayer</option>
-                <option value={"Seller"}>Seller</option>
-              </select>
-              
-            </div>
+
             <div className="form-control w-full ">
               <label className="label">
                 <span className="label-text">Password</span>
@@ -138,8 +130,25 @@ const SignUp = () => {
                 {...register("password", { required: "Enter your password" })}
               />
             </div>
+            <div className="form-control w-full ">
+              <label className="label">
+                <span className="label-text">Sign Up as</span>
+              </label>
+              <select
+                {...register("role", { required: "Enter your name" })}
+                className="select select-bordered w-full max-w-xs"
+              >
+                <option defaultValue={""} disabled selected>
+                  Select one
+                </option>
+                <option defaultValue={"Buyer"}>Buyer</option>
+                <option value={"Seller"}>Seller</option>
+              </select>
+            </div>
             <div className="form-control mt-6">
-              <button onClick={handleError} className="btn myButton">SignUp</button>
+              <button onClick={handleError} className="btn myButton">
+                SignUp
+              </button>
             </div>
           </form>
           <div>

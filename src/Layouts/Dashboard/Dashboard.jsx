@@ -22,11 +22,11 @@ const Dashboard = () => {
             {
               <>
                 <li>
-                  <Link>Add Product</Link>
+                  <Link to={'/dashboard/addProduct'}>Add Product</Link>
                 </li>
 
                 <li>
-                  <Link>My Product</Link>
+                  <Link to={'/dashboard/myProduct'} >My Product</Link>
                 </li>
 
                 <li>
@@ -47,11 +47,11 @@ const Dashboard = () => {
             {
               <>
                 <li>
-                  <Link>All Sellers</Link>
+                  <Link to={'/dashboard/allSellers'}>All Sellers</Link>
                 </li>
 
                 <li>
-                  <Link>All Buyers</Link>
+                  <Link to={'/dashboard/allBuyers'}>All Buyers</Link>
                 </li>
               </>
             }

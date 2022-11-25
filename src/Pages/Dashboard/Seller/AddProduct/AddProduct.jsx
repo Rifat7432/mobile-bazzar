@@ -33,8 +33,8 @@ const AddProduct = () => {
             resalePrice: "",
             productName: "",
             useYears: "",
-            categoryId: "",
-            condition: "",
+            categoryId: "Select your product category",
+            condition: "Select your product condition",
             description: "",
           });
           toast.success("Product added successful");
@@ -105,21 +105,21 @@ const AddProduct = () => {
   console.log(errors);
   const handleError = () => {
     if (errors) {
-      if (errors.location) {
+         if (errors.location) {
         return toast.error(errors.location.message);
-      } else if (errors.phoneNumber) {
+      }  if (errors.phoneNumber) {
         return toast.error(errors.phoneNumber.message);
-      } else if (errors.originalPrice) {
+      }  if (errors.originalPrice) {
         return toast.error(errors.originalPrice.message);
-      } else if (errors.resalePrice) {
+      }  if (errors.resalePrice) {
         return toast.error(errors.resalePrice.message);
-      } else if (errors.productName) {
+      }  if (errors.productName) {
         return toast.error(errors.productName.message);
-      } else if (errors.useYears) {
+      }  if (errors.useYears) {
         return toast.error(errors.useYears.message);
-      } else if (errors.img) {
+      }  if (errors.img) {
         return toast.error(errors.img.message);
-      } else if (errors.purchase) {
+      }  if (errors.purchase) {
         return toast.error(errors.purchase.message);
       }
     }
@@ -127,7 +127,7 @@ const AddProduct = () => {
   return (
     <div>
       <form
-        className="my-10 bg-slate-100 rounded-xl p-10"
+        className="my-10 shadow-2xl w-11/12 mx-auto rounded-xl p-10"
         onSubmit={handleSubmit(handleAddProduct)}
       >
         <p className="text-3xl  font-bold">
