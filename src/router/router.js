@@ -1,5 +1,6 @@
 import Dashboard from "../Layouts/Dashboard/Dashboard";
 import Main from "../Layouts/Main/Main";
+import AddProduct from "../Pages/Dashboard/Seller/AddProduct/AddProduct";
 import Login from "../Pages/Login/Login";
 import CategoryProducts from "../Pages/Products/CategoryProducts/CategoryProducts";
 import SignUp from "../Pages/Signup/SignUp";
@@ -27,7 +28,13 @@ const router = createBrowserRouter([
   },
   {
     path:'/dashboard',
-    element:<Dashboard></Dashboard>
+    element:<Dashboard></Dashboard>,
+    children:[
+      {
+        path:'/dashboard',
+        element:<AddProduct></AddProduct>
+      }
+    ]
   }
 ]);
 export default router;

@@ -120,12 +120,14 @@ const SignUp = () => {
                 <span className="label-text">Sign Up as</span>
               </label>
               <select
-                {...register("role")}
+                {...register("role",{ required: "Enter your name" })}
                 className="select select-bordered w-full max-w-xs"
               >
+                <option selected>hi</option>
                 <option defaultValue={"Bayer"}>Bayer</option>
                 <option value={"Seller"}>Seller</option>
               </select>
+              
             </div>
             <div className="form-control w-full ">
               <label className="label">

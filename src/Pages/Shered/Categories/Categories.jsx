@@ -14,7 +14,6 @@ const Categories = () => {
         `http://localhost:5000/categories`
       ).then((res) => res.json()),
   });
-  console.log(categories)
   return (
     <div className="bg-slate-800 flex justify-center text-slate-100">
       <div className="flex mr-5">
