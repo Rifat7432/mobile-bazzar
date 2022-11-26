@@ -44,7 +44,7 @@ const Categories = () => {
       </div>
       
       {
-        categories.map(category => <Link  to={`/category/${category._id}`} className="mx-4 btn-ghost my-2 categoryText" key={category._id}>{category.category}</Link>)
+        categories.map(category => <Link  to={`/category/${category._id}`} className="mx-4 btn-ghost  my-2 categoryText " key={category._id}>{category.category}</Link>)
       }
      
     </div>

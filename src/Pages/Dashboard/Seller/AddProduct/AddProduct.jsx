@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -7,6 +9,16 @@ import { AuthContext } from "../../../../ContextProvider/AuthProvider";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
+  const [seller, steSeller] = useState({});
+  useEffect(() => {
+    if (user?.email) {
+      fetch(
+        `http://localhost:5000/seller?email=${user?.email}&role=${"Seller"}`
+      )
+        .then((res) => res.json())
+        .then((data) => steSeller(data));
+    }
+  }, [user?.email]);
   const {
     register,
     formState: { errors },
@@ -92,7 +104,8 @@ const AddProduct = () => {
             condition,
             description,
             email: user?.email,
-            status: 'available'
+            status: "available",
+            sellerVerified: seller?.verified,
           };
           postData(product);
         }
@@ -104,33 +117,33 @@ const AddProduct = () => {
       fetch(`http://localhost:5000/categories`).then((res) => res.json()),
   });
   console.log(errors);
-  const handleError =  () => {
-  console.log(errors);
-   
- if (errors) {
-  console.log(errors);
-    
-  if (errors.location) {
+  const handleError = () => {
+    console.log(errors);
+
+    if (errors) {
+      console.log(errors);
+
+      if (errors.location) {
         return toast.error(errors.location.message);
-      } 
-       if (errors.phoneNumber) {
+      }
+      if (errors.phoneNumber) {
         return toast.error(errors.phoneNumber.message);
-      } 
-       if (errors.originalPrice) {
+      }
+      if (errors.originalPrice) {
         return toast.error(errors.originalPrice.message);
-      } 
-       if (errors.resalePrice) {
+      }
+      if (errors.resalePrice) {
         return toast.error(errors.resalePrice.message);
-      } 
-       if (errors.productName) {
+      }
+      if (errors.productName) {
         return toast.error(errors.productName.message);
-      } 
-       if (errors.useYears) {
+      }
+      if (errors.useYears) {
         return toast.error(errors.useYears.message);
-      } 
-       if (errors.img) {
+      }
+      if (errors.img) {
         return toast.error(errors.img.message);
-      }  
+      }
       if (errors.purchase) {
         return toast.error(errors.purchase.message);
       }

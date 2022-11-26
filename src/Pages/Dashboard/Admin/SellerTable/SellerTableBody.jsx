@@ -14,8 +14,7 @@ const SellerTableBody = ({ user, i, refetch }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-      console.log(result, user?._id);
-      if (result) {
+      if (result.isConfirmed) {
         fetch(`http://localhost:5000/users/${user?._id}`, {
           method: "DELETE",
           headers: {

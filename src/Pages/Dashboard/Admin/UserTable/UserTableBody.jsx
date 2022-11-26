@@ -15,7 +15,6 @@ const UserTableBody = ({ user, i, refetch }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-      console.log(result);
       if (result.isConfirmed) {
         fetch(`http://localhost:5000/users/${user?._id}`, {
           method: "DELETE",
@@ -25,8 +24,6 @@ const UserTableBody = ({ user, i, refetch }) => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
-
             Swal.fire("Deleted!",` Buyer ${name}  has been deleted.`, "success");
             refetch();
           });
