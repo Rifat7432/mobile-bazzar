@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 const UserTableBody = ({ user, i, refetch }) => {
 
-  const { name, email } = user;
+  const { name, email ,userImg} = user;
   const handleDelete = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -34,7 +34,13 @@ const UserTableBody = ({ user, i, refetch }) => {
   return (
     <tr>
       <th>{i + 1}</th>
-      <td></td>
+      <td> <div className="flex items-center space-x-3">
+          <div className="avatar">
+            <div className="mask mask-squircle w-12 h-12">
+              <img src={userImg} alt="Avatar Tailwind CSS Component" />
+            </div>
+          </div>
+        </div></td>
       <td>{name}</td>
       <td>{email}</td>
      

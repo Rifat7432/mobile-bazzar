@@ -4,7 +4,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const SellerTableBody = ({ user, i, refetch }) => {
-  const { name, email ,verified} = user;
+  const { name, email ,verified,userImg} = user;
   const handleDelete = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -53,19 +53,28 @@ const SellerTableBody = ({ user, i, refetch }) => {
   return (
     <tr>
       <th>{i + 1}</th>
+      <td>
+        <div className="flex items-center space-x-3">
+          <div className="avatar">
+            <div className="mask mask-squircle w-12 h-12">
+              <img src={userImg} alt="Avatar Tailwind CSS Component" />
+            </div>
+          </div>
+          </div>
+          </td>
       <td>{name}</td>
       <td>{email}</td>
-      <td></td>
+       <td>
+        {verified ? <div className="badge badge-accent">Verified</div> : <button onClick={verify} className="btn myButton btn-sm">
+          Verify
+        </button>}
+      </td>
       <td>
         <button onClick={handleDelete} className="btn  btn-error btn-circle">
           <FaTrashAlt></FaTrashAlt>
         </button>
       </td>
-      <td>
-        {verified ? <div className="badge badge-accent">Verified</div> : <button onClick={verify} className="btn myButton btn-sm">
-          Verify
-        </button>}
-      </td>
+     
     </tr>
   );
 };

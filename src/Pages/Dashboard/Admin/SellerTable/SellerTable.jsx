@@ -9,11 +9,12 @@ const SellerTable = ({users ,refetch}) => {
           <thead>
             <tr>
               <th></th>
+              <th>image</th>
               <th>Name</th>
-              <th>Treatment</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Payment</th>
+              <th>Email</th>
+              <th>verification</th>
+              <th>Delete</th>
+              
             </tr>
           </thead>
           <tbody>
