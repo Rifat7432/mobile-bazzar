@@ -23,9 +23,8 @@ const MyProduct = () => {
       });
       console.log(products)
     return (
-        <div className='pt-5'>
-            
-                <ProductTable products={products} refetch={refetch}></ProductTable>
+        <div className='pt-5'>    
+                { products.length > 0 ?  <ProductTable products={products} refetch={refetch}></ProductTable> : <h1 className='text-4xl mt-32 font-semibold  text-center'>no product found</h1>}
             
         </div>
     );

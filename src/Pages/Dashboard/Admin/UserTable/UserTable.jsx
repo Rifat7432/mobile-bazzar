@@ -9,11 +9,12 @@ const UserTable = ({users ,refetch}) => {
           <thead>
             <tr>
               <th></th>
+              <th>image</th>
               <th>Name</th>
-              <th>Treatment</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Payment</th>
+              <th>email</th>
+              <th>delete</th>
+              
+         
             </tr>
           </thead>
           <tbody>

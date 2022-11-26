@@ -1,9 +1,10 @@
 import React from "react";
+import toast from "react-hot-toast";
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const SellerTableBody = ({ user, i, refetch }) => {
-  const { name, email } = user;
+  const { name, email ,verified} = user;
   const handleDelete = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -33,6 +34,21 @@ const SellerTableBody = ({ user, i, refetch }) => {
       }
     });
   };
+  const verify = () => {
+    fetch(`http://localhost:5000/users/${email}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ verified: true }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Seller verified successfully");
+        }
+      });
+  };
 
   return (
     <tr>
@@ -45,7 +61,11 @@ const SellerTableBody = ({ user, i, refetch }) => {
           <FaTrashAlt></FaTrashAlt>
         </button>
       </td>
-      <td></td>
+      <td>
+        {verified ? <div className="badge badge-accent">Verified</div> : <button onClick={verify} className="btn myButton btn-sm">
+          Verify
+        </button>}
+      </td>
     </tr>
   );
 };

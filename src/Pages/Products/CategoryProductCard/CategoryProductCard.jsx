@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { FaEllipsisH, FaCheck } from "react-icons/fa";
 
@@ -12,7 +13,23 @@ const CategoryProductCard = ({ product ,setModalData }) => {
     useYears,
     sellerVerified,
     productName,
+    email
   } = product;
+  const { data: seller = {},refetch } = useQuery({
+    queryKey: ["seller",email],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:5000/seller/${email}`,
+        {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
 const manageModal =()=>{
   setModalData(product)
 }
@@ -24,7 +41,7 @@ const manageModal =()=>{
             <div className="flex items-center space-x-3">
               <div className="avatar">
                 <div className="mask mask-circle w-12 h-12">
-                  <img src={img} alt="Avatar Tailwind CSS Component" />
+                  <img src={seller?.userImg} alt="Avatar Tailwind CSS Component" />
                 </div>
               </div>
             </div>

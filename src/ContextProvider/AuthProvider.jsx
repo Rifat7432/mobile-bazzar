@@ -36,10 +36,11 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
-  const updateUser = (name) => {
+  const updateUser = (name,img) => {
     setLoading(true);
     updateProfile(auth.currentUser, {
       displayName: name,
+      photoURL:img
     })
       .then(() => {})
       .catch((error) => {});

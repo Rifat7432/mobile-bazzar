@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -34,11 +35,12 @@ const SignUp = () => {
           .catch((e) => console.error(e));
       });
   };
-  const addUser = (email, name, role) => {
+  const addUser = (email, name, role,img) => {
     let user = {
       email,
       name,
       role,
+      userImg:img,
       verified:false
     };
     if(role === 'Buyer'){
@@ -46,6 +48,7 @@ const SignUp = () => {
         email,
         name,
         role,
+        userImg:img,
       }
     }
     fetch("http://localhost:5000/users", {
@@ -71,29 +74,46 @@ const SignUp = () => {
       });
   };
   const handleSignUp = (data) => {
-    const { name, email, password, role } = data;
+    const { name, email, password, role,userImg } = data;
     if (role === "" || role === "Select one") {
       return toString.error("Please select an option");
     }
-    signUp(email, password)
+    const image = userImg[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?&key=${process.env.REACT_APP_imgBB_apiKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          const img = data.data.url
+          signUp(email, password)
       .then((Result) => {
-        addUser(email, name, role);
-        updateUser(name);
+        addUser(email, name, role,img);
+        updateUser(name,img);
       })
       .catch((e) => toast.error(e.message));
+        }})
+    
   };
 
-  const handleError = () => {
+ useEffect( () => {
     if (errors) {
       if (errors.name) {
         return toast.error(errors.name.message);
-      } else if (errors.email) {
+      }  if (errors.email) {
         return toast.error(errors.email.message);
-      } else if (errors.password) {
+      } if (errors.password) {
         return toast.error(errors.password.message);
       }
+       if (errors.userImg) {
+        return toast.error(errors.userImg.message);
+      }
     }
-  };
+  },[errors])
   return (
     <div className="hero py-10">
       <div className="hero-content flex-col lg:flex-row">
@@ -153,8 +173,18 @@ const SignUp = () => {
                 <option value={"Seller"}>Seller</option>
               </select>
             </div>
+            <div className="form-control w-full ">
+              <label className="label">
+                <span className="label-text">Password</span>
+              </label>
+              <input
+             type="file"
+                className="input input-bordered w-full "
+                {...register("userImg", { required: "Upload your image" })}
+              />
+            </div>
             <div className="form-control mt-6">
-              <button onClick={handleError} className="btn myButton">
+              <button className="btn myButton">
                 SignUp
               </button>
             </div>

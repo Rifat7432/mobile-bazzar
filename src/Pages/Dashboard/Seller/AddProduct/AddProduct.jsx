@@ -117,7 +117,7 @@ const AddProduct = () => {
       fetch(`http://localhost:5000/categories`).then((res) => res.json()),
   });
   console.log(errors);
-  const handleError = () => {
+  useEffect( () => {
     console.log(errors);
 
     if (errors) {
@@ -148,7 +148,8 @@ const AddProduct = () => {
         return toast.error(errors.purchase.message);
       }
     }
-  };
+  },[errors]
+  )
   return (
     <div>
       <form
@@ -331,7 +332,6 @@ const AddProduct = () => {
           placeholder="Product Description"
         ></textarea>
         <button
-          onClick={handleError}
           className="btn myButton ml-auto py-4 px-5 flex"
         >
           Post

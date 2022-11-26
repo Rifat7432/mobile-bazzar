@@ -34,15 +34,16 @@ const UserTableBody = ({ user, i, refetch }) => {
   return (
     <tr>
       <th>{i + 1}</th>
+      <td></td>
       <td>{name}</td>
       <td>{email}</td>
-      <td></td>
+     
       <td>
         <button onClick={handleDelete} className="btn  btn-error btn-circle">
           <FaTrashAlt></FaTrashAlt>
         </button>
       </td>
-      <td></td>
+     
     </tr>
   );
 };

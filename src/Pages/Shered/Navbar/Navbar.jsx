@@ -71,34 +71,7 @@ const Navbar = () => {
           
         </ul>
       </div>
-     <div className="w-1/3 hidden justify-between lg:flex">
-      <form className="flex justify-center items-center mx-3 btn-group">
-     <div className="form-control ">
-            <input
-              type="text"
-              placeholder="Search"
-              className="input  input-bordered max-w-xs rounded-none rounded-l-xl"
-            />
-            
-          </div>
-          <button className="btn"><FaSearch></FaSearch></button></form>
-      <div className="dropdown dropdown-end">
-        <label tabIndex={1} className="btn btn-ghost btn-circle avatar">
-          <div className="w-10 rounded-full">
-            <img src="https://placeimg.com/80/80/people" />
-          </div>
-        </label>
-        <ul
-          tabIndex={1}
-          className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
-        >
-          <li>
-            <a className="justify-between">Profile</a>
-          </li>
-        </ul>
-      </div>
-
-     </div>
+    
      <label
         htmlFor="dashboard-drawer"
         tabIndex={2}

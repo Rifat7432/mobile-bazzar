@@ -24,7 +24,7 @@ const GetModal = ({ modalData, setModalData }) => {
       buyerEmail: user?.email,
       meetingLocation,
       mobileNumber,
-      paid:false
+      paid: false,
     };
 
     fetch("http://localhost:5000/order", {
@@ -37,25 +37,16 @@ const GetModal = ({ modalData, setModalData }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
-          fetch(`http://localhost:5000/product/${modalData?._id}`, {
-            method: "PUT",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({ status: "sold" }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              console.log(data);
-              if (data.acknowledged) {
-                toast.success(`${modalData?.productName} booked successfully`);
-                setModalData(null);
-                reset({
-                  meetingLocation: "",
-                  mobileNumber: "",
-                });
-              }
-            });
+          toast.success(`${modalData?.productName} booked successfully`);
+          setModalData(null);
+          reset({
+            meetingLocation: "",
+            mobileNumber: "",
+          });
+
+          toast(" Please complete your payment to buy this product", {
+            duration: 5000,
+          });
         }
       });
   };
