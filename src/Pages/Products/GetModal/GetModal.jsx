@@ -24,6 +24,7 @@ const GetModal = ({ modalData, setModalData }) => {
       buyerEmail: user?.email,
       meetingLocation,
       mobileNumber,
+      paid:false
     };
 
     fetch("http://localhost:5000/order", {

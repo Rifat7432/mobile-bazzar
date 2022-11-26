@@ -35,11 +35,19 @@ const SignUp = () => {
       });
   };
   const addUser = (email, name, role) => {
-    const user = {
+    let user = {
       email,
       name,
       role,
+      verified:false
     };
+    if(role === 'Buyer'){
+      user = {
+        email,
+        name,
+        role,
+      }
+    }
     fetch("http://localhost:5000/users", {
       method: "POST",
       headers: {

@@ -2,6 +2,8 @@ import Dashboard from "../Layouts/Dashboard/Dashboard";
 import Main from "../Layouts/Main/Main";
 import AllBuyers from "../Pages/Dashboard/Admin/AllBuyers/AllBuyers";
 import AllSellers from "../Pages/Dashboard/Admin/AllSellers/AllSellers";
+import MyOrders from "../Pages/Dashboard/Buyer/MyOrders/MyOrders";
+import Payment from "../Pages/Dashboard/Buyer/Payment/Payment";
 import AddProduct from "../Pages/Dashboard/Seller/AddProduct/AddProduct";
 import MyProduct from "../Pages/Dashboard/Seller/MyProduct/MyProduct";
 import Login from "../Pages/Login/Login";
@@ -59,6 +61,17 @@ const router = createBrowserRouter([
       {
         path:'/dashboard/allBuyers',
         element:<AllBuyers></AllBuyers>
+      },
+      {
+        path:'/dashboard/myOrders',
+        element:<MyOrders></MyOrders>
+      },
+      {
+        path:'/dashboard/payment/:id',
+        element:<Payment></Payment>,
+        loader:({params})=>{
+          return fetch(`http://localhost:5000/orderPayment/${params.id}`)
+        }
       },
     ]
   }
