@@ -25,6 +25,7 @@ const GetModal = ({ modalData, setModalData }) => {
       meetingLocation,
       mobileNumber,
     };
+
     fetch("http://localhost:5000/order", {
       method: "POST",
       headers: {
@@ -35,12 +36,25 @@ const GetModal = ({ modalData, setModalData }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
-            toast.success(`${modalData?.productName} booked successfully`)
-          setModalData(null);
-          reset({
-            meetingLocation:'',
-            mobileNumber:''
+          fetch(`http://localhost:5000/product/${modalData?._id}`, {
+            method: "PUT",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify({ status: "sold" }),
           })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              if (data.acknowledged) {
+                toast.success(`${modalData?.productName} booked successfully`);
+                setModalData(null);
+                reset({
+                  meetingLocation: "",
+                  mobileNumber: "",
+                });
+              }
+            });
         }
       });
   };
