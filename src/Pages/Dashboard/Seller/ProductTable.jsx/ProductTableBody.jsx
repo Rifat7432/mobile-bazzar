@@ -1,10 +1,30 @@
 import React from "react";
+import toast from "react-hot-toast";
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const ProductTableBody = ({ product, i, refetch }) => {
-  const { img, productName, resalePrice, status, _id } = product;
+  const { img, productName, resalePrice, status, _id ,advertise} = product;
   console.log(product);
+
+  const advertiseProduct = () => {
+    
+    fetch(`http://localhost:5000/product/${_id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ advertise: true }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          refetch()
+          toast.success("advertise successful");
+        }
+      });
+  };
+
   const handleDelete = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -48,8 +68,10 @@ const ProductTableBody = ({ product, i, refetch }) => {
       <td>{resalePrice} tk</td>
       <td>{status}</td>
       <td>
-        {status === "available" && (
-          <button className="btn myButton">Advertise</button>
+        {status === "available" && advertise === false && (
+          <button onClick={advertiseProduct} className="btn myButton">
+            Advertise
+          </button>
         )}
       </td>
       <td>
