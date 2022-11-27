@@ -25,8 +25,6 @@ const AuthProvider = ({ children }) => {
   const signUpByGoogle = () => {
     setLoading(true);
     return signInWithPopup(auth, googleProvider)
-      .then((result) => {})
-      .catch((error) => {});
   };
   const signUp = (email, password) => {
     setLoading(true);
@@ -49,7 +47,7 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signOut(auth)
       .then(() => {
-        // Sign-out successful.
+       localStorage.removeItem('token')
       })
       .catch((error) => {
         // An error happened.

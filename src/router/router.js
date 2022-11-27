@@ -8,8 +8,11 @@ import AddProduct from "../Pages/Dashboard/Seller/AddProduct/AddProduct";
 import MyProduct from "../Pages/Dashboard/Seller/MyProduct/MyProduct";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
+import NothingFound from "../Pages/NothingFound/NothingFound";
 import CategoryProducts from "../Pages/Products/CategoryProducts/CategoryProducts";
 import SignUp from "../Pages/Signup/SignUp";
+import AdminRoute from "./AdminRoute";
+import Private from "./Private"
 
 const { createBrowserRouter } = require("react-router-dom");
 
@@ -20,7 +23,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/category/:id",
-        element: <CategoryProducts></CategoryProducts>,
+        element: <Private><CategoryProducts></CategoryProducts></Private>,
         loader:({params})=>{
           return fetch(`http://localhost:5000/categoryProducts/${params.id}`)
         }
@@ -41,7 +44,7 @@ const router = createBrowserRouter([
   },
   {
     path:'/dashboard',
-    element:<Dashboard></Dashboard>,
+    element:<Private><Dashboard></Dashboard></Private>,
     children:[
       {
         path:'/dashboard',
@@ -57,15 +60,11 @@ const router = createBrowserRouter([
       },
       {
         path:'/dashboard/allSellers',
-        element:<AllSellers></AllSellers>
+        element:<AdminRoute><AllSellers></AllSellers></AdminRoute>
       },
       {
         path:'/dashboard/allBuyers',
-        element:<AllBuyers></AllBuyers>
-      },
-      {
-        path:'/dashboard/allBuyers',
-        element:<AllBuyers></AllBuyers>
+        element:<AdminRoute><AllBuyers></AllBuyers></AdminRoute>
       },
       {
         path:'/dashboard/myOrders',
@@ -78,7 +77,15 @@ const router = createBrowserRouter([
           return fetch(`http://localhost:5000/orderPayment/${params.id}`)
         }
       },
+      {
+        path:"/dashboard/*",
+        element:<NothingFound></NothingFound>
+      }
     ]
+  },
+  {
+    path:'*',
+    element:<NothingFound></NothingFound>
   }
 ]);
 export default router;

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../ContextProvider/AuthProvider";
 
 const Login = () => {
@@ -19,6 +20,11 @@ const Login = () => {
     fetch(`http://localhost:5000/jwt?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
+        Swal.fire(
+          'successful',
+          'Login successful.',
+          'success'
+        )
         navigate(form, { replace: true });
         reset({
           email: "",
@@ -48,6 +54,60 @@ const Login = () => {
       }
     }
   };
+  const addUser = (email, name, role,img) => {
+    let user = {
+      email,
+      name,
+      role,
+      userImg:img,
+      verified:false
+    };
+    if(role === 'Buyer'){
+      user = {
+        email,
+        name,
+        role,
+        userImg:img,
+      }
+    }
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          
+          getToken(email);
+        }
+      })
+      
+      
+  };
+  const gooLogin = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "if you Login by google you will consider as a buyer",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Proceed!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signUpByGoogle()
+          .then((result) => {
+            const user = result.user;
+            addUser(user?.email, user?.displayName, "Buyer", user?.photoURL);
+           
+          })
+          .catch((error) => {});
+      }
+    });
+  }
   return (
     <div className="hero py-10">
       <div className="hero-content flex-col lg:flex-row">
@@ -105,7 +165,7 @@ const Login = () => {
           </div>
           <div className="divider">OR</div>
           <button
-            onClick={signUpByGoogle}
+            onClick={gooLogin}
             className="btn w-4/5 mx-auto btn-outline myOutlineButton"
           >
             CONTINUE WITH GOOGLE

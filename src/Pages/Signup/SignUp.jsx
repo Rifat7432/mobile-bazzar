@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../ContextProvider/AuthProvider";
 
 const SignUp = () => {
@@ -19,7 +20,11 @@ const SignUp = () => {
     fetch(`http://localhost:5000/jwt?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
-        toast.success("Sign up successful");
+        Swal.fire(
+          'successful',
+          'sign up successful.',
+          'success'
+        )
         localStorage.setItem("token", data.accessToken);
         reset({
           email: "",
@@ -35,21 +40,21 @@ const SignUp = () => {
           .catch((e) => console.error(e));
       });
   };
-  const addUser = (email, name, role,img) => {
+  const addUser = (email, name, role, img) => {
     let user = {
       email,
       name,
       role,
-      userImg:img,
-      verified:false
+      userImg: img,
+      verified: false,
     };
-    if(role === 'Buyer'){
+    if (role === "Buyer") {
       user = {
         email,
         name,
         role,
-        userImg:img,
-      }
+        userImg: img,
+      };
     }
     fetch("http://localhost:5000/users", {
       method: "POST",
@@ -74,7 +79,7 @@ const SignUp = () => {
       });
   };
   const handleSignUp = (data) => {
-    const { name, email, password, role,userImg } = data;
+    const { name, email, password, role, userImg } = data;
     if (role === "" || role === "Select one") {
       return toString.error("Please select an option");
     }
@@ -89,31 +94,54 @@ const SignUp = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          const img = data.data.url
+          const img = data.data.url;
           signUp(email, password)
-      .then((Result) => {
-        addUser(email, name, role,img);
-        updateUser(name,img);
-      })
-      .catch((e) => toast.error(e.message));
-        }})
-    
+            .then((Result) => {
+              addUser(email, name, role, img);
+              updateUser(name, img);
+            })
+            .catch((e) => toast.error(e.message));
+        }
+      });
   };
 
- useEffect( () => {
+  useEffect(() => {
     if (errors) {
       if (errors.name) {
         return toast.error(errors.name.message);
-      }  if (errors.email) {
+      }
+      if (errors.email) {
         return toast.error(errors.email.message);
-      } if (errors.password) {
+      }
+      if (errors.password) {
         return toast.error(errors.password.message);
       }
-       if (errors.userImg) {
+      if (errors.userImg) {
         return toast.error(errors.userImg.message);
       }
     }
-  },[errors])
+  }, [errors]);
+  const gooLogin = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "if you sign up by google you will consider as a buyer",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Proceed!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signUpByGoogle()
+          .then((result) => {
+            const user = result.user;
+            addUser(user?.email, user?.displayName, "Buyer", user?.photoURL);
+           
+          })
+          .catch((error) => {});
+      }
+    });
+  };
   return (
     <div className="hero py-10">
       <div className="hero-content flex-col lg:flex-row">
@@ -178,15 +206,13 @@ const SignUp = () => {
                 <span className="label-text">Password</span>
               </label>
               <input
-             type="file"
+                type="file"
                 className="input input-bordered w-full "
                 {...register("userImg", { required: "Upload your image" })}
               />
             </div>
             <div className="form-control mt-6">
-              <button className="btn myButton">
-                SignUp
-              </button>
+              <button className="btn myButton">SignUp</button>
             </div>
           </form>
           <div>
@@ -205,7 +231,7 @@ const SignUp = () => {
           </div>
           <div className="divider">OR</div>
           <button
-            onClick={signUpByGoogle}
+            onClick={gooLogin}
             className="btn w-4/5 mx-auto btn-outline myOutlineButton"
           >
             CONTINUE WITH GOOGLE
