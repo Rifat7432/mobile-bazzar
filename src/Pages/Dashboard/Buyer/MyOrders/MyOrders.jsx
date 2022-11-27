@@ -22,7 +22,7 @@ const MyOrders = () => {
       });
     return (
         <div className='pt-5'>
-           {orders.length > 0 ? <MyOrdersTable orders={orders} refetch={refetch}></MyOrdersTable>:<h1 className='text-4xl mt-32 font-semibold  text-center'>no sellers found</h1>}
+           {orders.length > 0 ? <MyOrdersTable orders={orders} refetch={refetch}></MyOrdersTable>:<h1 className='text-4xl mt-32 font-semibold  text-center'>no orders found</h1>}
         </div>
     );
 };
