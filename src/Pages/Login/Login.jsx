@@ -119,6 +119,7 @@ const Login = () => {
                 <span className="label-text">Email</span>
               </label>
               <input
+              type={'email'}
                 className="input input-bordered w-full "
                 {...register("email", { required: "Enter your email" })}
               />
@@ -131,6 +132,7 @@ const Login = () => {
                 <span className="label-text">Password</span>
               </label>
               <input
+              type={'password'}
                 className="input input-bordered w-full "
                 {...register("password", { required: "Enter your password" })}
               />
