@@ -139,11 +139,7 @@ const Login = () => {
               {errors?.password && (
                 <p className="text-red-500">{errors?.password?.message}</p>
               )}
-              <label className="label">
-                <Link className="label-text-alt link link-hover">
-                  Forgot password?
-                </Link>
-              </label>
+              
             </div>
             <div className="form-control mt-6">
               <button onClick={handleError} className="btn myButton">
