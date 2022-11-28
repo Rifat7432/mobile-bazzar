@@ -5,12 +5,6 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-//   apiKey: "AIzaSyAlLPv9BJiEJrypJEA5rAv3kdSJhiLuW78",
-//   authDomain: "mobilebazzardotcom.firebaseapp.com",
-//   projectId: "mobilebazzardotcom",
-//   storageBucket: "mobilebazzardotcom.appspot.com",
-//   messagingSenderId: "224997459463",
-//   appId: "1:224997459463:web:b862eae682899949f6cca2"
 apiKey:process.env.REACT_APP_apiKey,
   authDomain:process.env.REACT_APP_authDomain,
   projectId:process.env.REACT_APP_projectId,

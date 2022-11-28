@@ -4,9 +4,11 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../ContextProvider/AuthProvider";
+import useBuyer from "../../../Hooks/IsBuyer";
 
 const GetModal = ({ modalData, setModalData }) => {
   const { user } = useContext(AuthContext);
+  const [buyer, buyerLoading] = useBuyer(user?.email);
   const {
     reset,
     register,
@@ -27,13 +29,12 @@ const GetModal = ({ modalData, setModalData }) => {
       paid: false,
     };
 
-    fetch("http://localhost:5000/order", {
+    fetch("https://mobiledazzar.vercel.app/order", {
       method: "POST",
       headers: {
         "content-type": "application/json",
-     
+
         authorization: `bearer ${localStorage.getItem("token")}`,
-      
       },
       body: JSON.stringify(booking),
     })
@@ -141,7 +142,26 @@ const GetModal = ({ modalData, setModalData }) => {
               />
             </div>
             <div className="form-control mt-6">
-              <button className="btn myButton">Book</button>
+              {buyer ? (
+                <button className="btn myButton">Submit</button>
+              ) : (
+                <div className="badge badge-info gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    className="inline-block w-4 h-4 stroke-current"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
+                  A buyer can only buy product
+                </div>
+              )}
             </div>
           </form>
         </div>

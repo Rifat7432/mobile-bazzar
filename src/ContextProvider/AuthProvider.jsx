@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
 
   const signUpByGoogle = () => {
     setLoading(true);
-    return signInWithPopup(auth, googleProvider)
+    return signInWithPopup(auth, googleProvider);
   };
   const signUp = (email, password) => {
     setLoading(true);
@@ -34,11 +34,11 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
-  const updateUser = (name,img) => {
+  const updateUser = (name, img) => {
     setLoading(true);
     updateProfile(auth.currentUser, {
       displayName: name,
-      photoURL:img
+      photoURL: img,
     })
       .then(() => {})
       .catch((error) => {});
@@ -47,15 +47,15 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signOut(auth)
       .then(() => {
-       localStorage.removeItem('token')
+        localStorage.removeItem("token");
       })
       .catch((error) => {
         // An error happened.
       });
   };
-  const removeUser=()=>{
-    return deleteUser(auth.currentUser)
-  }
+  const removeUser = () => {
+    return deleteUser(auth.currentUser);
+  };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);

@@ -4,12 +4,11 @@ import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const ProductTableBody = ({ product, i, refetch }) => {
-  const { img, productName, resalePrice, status, _id ,advertise} = product;
+  const { img, productName, resalePrice, status, _id, advertise } = product;
   console.log(product);
 
   const advertiseProduct = () => {
-    
-    fetch(`http://localhost:5000/product/${_id}`, {
+    fetch(`https://mobiledazzar.vercel.app/product/${_id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -20,7 +19,7 @@ const ProductTableBody = ({ product, i, refetch }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
-          refetch()
+          refetch();
           toast.success("advertise successful");
         }
       });
@@ -37,7 +36,7 @@ const ProductTableBody = ({ product, i, refetch }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/product/${_id}`, {
+        fetch(`https://mobiledazzar.vercel.app/product/${_id}`, {
           method: "DELETE",
           headers: {
             authorization: `bearer ${localStorage.getItem("token")}`,

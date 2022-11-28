@@ -6,9 +6,7 @@ const useBuyer = (email) => {
   const [buyerLoading, setBuyerLoading] = useState(true);
   useEffect(() => {
     if (email) {
-      fetch(
-        `http://localhost:5000/users/Buyer/${email}`
-      )
+      fetch(`https://mobiledazzar.vercel.app/users/Buyer/${email}`)
         .then((res) => res.json())
         .then((data) => {
           setBuyer(data.isBuyer);

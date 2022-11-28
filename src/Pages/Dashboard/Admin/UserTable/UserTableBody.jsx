@@ -3,8 +3,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const UserTableBody = ({ user, i, refetch }) => {
-
-  const { name, email ,userImg} = user;
+  const { name, email, userImg } = user;
   const handleDelete = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -16,7 +15,7 @@ const UserTableBody = ({ user, i, refetch }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/users/${user?._id}`, {
+        fetch(`https://mobiledazzar.vercel.app/users/${user?._id}`, {
           method: "DELETE",
           headers: {
             authorization: `bearer ${localStorage.getItem("token")}`,
@@ -24,7 +23,11 @@ const UserTableBody = ({ user, i, refetch }) => {
         })
           .then((res) => res.json())
           .then((data) => {
-            Swal.fire("Deleted!",` Buyer ${name}  has been deleted.`, "success");
+            Swal.fire(
+              "Deleted!",
+              ` Buyer ${name}  has been deleted.`,
+              "success"
+            );
             refetch();
           });
       }
@@ -34,22 +37,24 @@ const UserTableBody = ({ user, i, refetch }) => {
   return (
     <tr>
       <th>{i + 1}</th>
-      <td> <div className="flex items-center space-x-3">
+      <td>
+        {" "}
+        <div className="flex items-center space-x-3">
           <div className="avatar">
             <div className="mask mask-squircle w-12 h-12">
               <img src={userImg} alt="Avatar Tailwind CSS Component" />
             </div>
           </div>
-        </div></td>
+        </div>
+      </td>
       <td>{name}</td>
       <td>{email}</td>
-     
+
       <td>
         <button onClick={handleDelete} className="btn  btn-error btn-circle">
           <FaTrashAlt></FaTrashAlt>
         </button>
       </td>
-     
     </tr>
   );
 };

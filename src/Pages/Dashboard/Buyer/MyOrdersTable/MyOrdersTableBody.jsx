@@ -33,7 +33,9 @@ const MyOrdersTableBody = ({ order, i, refetch }) => {
         {paid === true ? (
           <p>Paid</p>
         ) : (
-          <Link to={`/dashboard/payment/${_id}`} className="btn myButton">Pay</Link>
+          <Link to={`/dashboard/payment/${_id}`} className="btn myButton">
+            Pay
+          </Link>
         )}
       </td>
       <td>

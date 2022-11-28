@@ -15,7 +15,7 @@ const ReportTableBody = ({ reportedProduct, i, refetch }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/product/${_id}`, {
+        fetch(`https://mobiledazzar.vercel.app/product/${_id}`, {
           method: "DELETE",
           headers: {
             authorization: `bearer ${localStorage.getItem("token")}`,

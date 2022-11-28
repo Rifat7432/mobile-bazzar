@@ -1,16 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
-import { FaEllipsisH, FaCheck, FaExclamationCircle ,FaHeart} from "react-icons/fa";
+import {
+  FaEllipsisH,
+  FaCheck,
+  FaExclamationCircle,
+  FaHeart,
+} from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const CategoryProductCard = ({ product, setModalData ,refetch}) => {
-  console.log(product)
+const CategoryProductCard = ({ product, setModalData, refetch }) => {
+  console.log(product);
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
-  
+
   const {
     img,
     SellerName,
@@ -28,11 +33,14 @@ const CategoryProductCard = ({ product, setModalData ,refetch}) => {
   const { data: seller = {} } = useQuery({
     queryKey: ["seller", email],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/seller/${email}`, {
-        headers: {
-          authorization: `bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const res = await fetch(
+        `https://mobiledazzar.vercel.app/seller/${email}`,
+        {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       const data = await res.json();
       return data;
     },
@@ -42,7 +50,7 @@ const CategoryProductCard = ({ product, setModalData ,refetch}) => {
   };
   const handelReport = () => {
     if (report === false) {
-      fetch(`http://localhost:5000/reportProduct/${_id}`, {
+      fetch(`https://mobiledazzar.vercel.app/reportProduct/${_id}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",
@@ -53,7 +61,7 @@ const CategoryProductCard = ({ product, setModalData ,refetch}) => {
         .then((res) => res.json())
         .then((data) => {
           if (data.acknowledged) {
-            refetch()
+            refetch();
             toast.success(`${productName} reported successfully`);
           }
         });
@@ -61,9 +69,12 @@ const CategoryProductCard = ({ product, setModalData ,refetch}) => {
       return toast.success(`${productName} reported successfully`);
     }
   };
- 
+
   return (
-    <div data-aos="flip-left"  className="card card-compact bg-base-100 shadow-2xl">
+    <div
+      data-aos="flip-left"
+      className="card card-compact bg-base-100 shadow-2xl"
+    >
       <div className="p-5">
         <div className="flex items-center">
           <div>
@@ -90,13 +101,11 @@ const CategoryProductCard = ({ product, setModalData ,refetch}) => {
               )}
             </div>
             <div className="flex">
-
               <h4>{date}</h4>
             </div>
           </div>
 
           <div className="flex items-center mr-4">
-          
             <div className="dropdown dropdown-end">
               <label tabIndex={1} className="btn btn-ghost avatar">
                 <FaEllipsisH></FaEllipsisH>
@@ -106,7 +115,10 @@ const CategoryProductCard = ({ product, setModalData ,refetch}) => {
                 className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 font-semibold text-slate-800 rounded-box w-52"
               >
                 <li>
-                  <button onClick={handelReport} className="justify-items-start">
+                  <button
+                    onClick={handelReport}
+                    className="justify-items-start"
+                  >
                     <div className="avatar w-1/4 ml-2">
                       <div className="mask mask-circle p-1 ">
                         <FaExclamationCircle></FaExclamationCircle>

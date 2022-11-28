@@ -2,14 +2,13 @@ import React from "react";
 import { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../ContextProvider/AuthProvider";
-import Loader from '../Pages/Shered/Loader/Loader'
-
+import Loader from "../Pages/Shered/Loader/Loader";
 
 const Private = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
   if (loading) {
-    return <Loader></Loader>
+    return <Loader></Loader>;
   }
 
   if (user) {

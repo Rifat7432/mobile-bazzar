@@ -8,10 +8,10 @@ import useSeller from "../../Hooks/IsSeller";
 import Navbar from "../../Pages/Shered/Navbar/Navbar";
 
 const Dashboard = () => {
-  const {user} = useContext(AuthContext)
-  const [admin,adminLoading] = useAdmin(user?.email)
-  const [seller, sellerLoading] = useSeller(user?.email)
-  const [buyer, buyerLoading] = useBuyer(user?.email)
+  const { user } = useContext(AuthContext);
+  const [admin, adminLoading] = useAdmin(user?.email);
+  const [seller, sellerLoading] = useSeller(user?.email);
+  const [buyer, buyerLoading] = useBuyer(user?.email);
   return (
     <div>
       <Navbar></Navbar>
@@ -27,39 +27,38 @@ const Dashboard = () => {
         <div className="drawer-side">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 bg-base-100 text-base-content">
-            
-            {seller &&
+            {seller && (
               <>
                 <li>
-                  <Link to={'/dashboard/addProduct'}>Add Product</Link>
+                  <Link to={"/dashboard/addProduct"}>Add Product</Link>
                 </li>
 
                 <li>
-                  <Link to={'/dashboard/myProduct'} >My Product</Link>
+                  <Link to={"/dashboard/myProduct"}>My Product</Link>
                 </li>
               </>
-            }
-            { buyer &&
+            )}
+            {buyer && (
               <>
                 <li>
-                  <Link to={'/dashboard/myOrders'}>My Orders</Link>
+                  <Link to={"/dashboard/myOrders"}>My Orders</Link>
                 </li>
               </>
-            }
-            {admin &&
+            )}
+            {admin && (
               <>
                 <li>
-                  <Link to={'/dashboard/allSellers'}>All Sellers</Link>
+                  <Link to={"/dashboard/allSellers"}>All Sellers</Link>
                 </li>
 
                 <li>
-                  <Link to={'/dashboard/allBuyers'}>All Buyers</Link>
+                  <Link to={"/dashboard/allBuyers"}>All Buyers</Link>
                 </li>
                 <li>
-                  <Link to={'/dashboard/report'}>Reported Items</Link>
+                  <Link to={"/dashboard/report"}>Reported Items</Link>
                 </li>
               </>
-            }
+            )}
           </ul>
         </div>
       </div>

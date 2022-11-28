@@ -14,8 +14,8 @@ import NothingFound from "../Pages/NothingFound/NothingFound";
 import CategoryProducts from "../Pages/Products/CategoryProducts/CategoryProducts";
 import SignUp from "../Pages/Signup/SignUp";
 import AdminRoute from "./AdminRoute";
-import Private from "./Private"
-import Blog from "../Pages/Blog/Blog"
+import Private from "./Private";
+import Blog from "../Pages/Blog/Blog";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 const { createBrowserRouter } = require("react-router-dom");
@@ -24,11 +24,15 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
-    errorElement:<ErrorPage></ErrorPage>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/category/:id",
-        element: <Private><CategoryProducts></CategoryProducts></Private>,
+        element: (
+          <Private>
+            <CategoryProducts></CategoryProducts>
+          </Private>
+        ),
       },
       {
         path: "/",
@@ -49,58 +53,81 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path:'/dashboard',
-    element:<Private><Dashboard></Dashboard></Private>,
-    errorElement:<ErrorPage></ErrorPage>,
-    children:[
+    path: "/dashboard",
+    element: (
+      <Private>
+        <Dashboard></Dashboard>
+      </Private>
+    ),
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
       {
-        path:'/dashboard',
-        element:<DashboardHome></DashboardHome>
+        path: "/dashboard",
+        element: <DashboardHome></DashboardHome>,
       },
       {
-        path:'/dashboard/addProduct',
-        element:<AddProduct></AddProduct>
+        path: "/dashboard/addProduct",
+        element: <AddProduct></AddProduct>,
       },
       {
-        path:'/dashboard/myProduct',
-        element:<MyProduct></MyProduct>
+        path: "/dashboard/myProduct",
+        element: <MyProduct></MyProduct>,
       },
       {
-        path:'/dashboard/allSellers',
-        element:<AdminRoute><AllSellers></AllSellers></AdminRoute>
+        path: "/dashboard/allSellers",
+        element: (
+          <AdminRoute>
+            <AllSellers></AllSellers>
+          </AdminRoute>
+        ),
       },
       {
-        path:'/dashboard/allBuyers',
-        element:<AdminRoute><AllBuyers></AllBuyers></AdminRoute>
+        path: "/dashboard/allBuyers",
+        element: (
+          <AdminRoute>
+            <AllBuyers></AllBuyers>
+          </AdminRoute>
+        ),
       },
       {
-        path:'/dashboard/myOrders',
-        element:<MyOrders></MyOrders>
+        path: "/dashboard/myOrders",
+        element: <MyOrders></MyOrders>,
       },
       {
-        path:'/dashboard/report',
-        element:<AdminRoute><Report></Report></AdminRoute>
+        path: "/dashboard/report",
+        element: (
+          <AdminRoute>
+            <Report></Report>
+          </AdminRoute>
+        ),
       },
       {
-        path:'/dashboard/payment/:id',
-        element:<Private><Payment></Payment></Private>,
-        loader:({params})=>{
-          return fetch(`http://localhost:5000/orderPayment/${params.id}`, {
-                  headers: {
-                    authorization: `bearer ${localStorage.getItem("token")}`,
-                  },
-                });
-        }
+        path: "/dashboard/payment/:id",
+        element: (
+          <Private>
+            <Payment></Payment>
+          </Private>
+        ),
+        loader: ({ params }) => {
+          return fetch(
+            `https://mobiledazzar.vercel.app/orderPayment/${params.id}`,
+            {
+              headers: {
+                authorization: `bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+        },
       },
       {
-        path:"/dashboard/*",
-        element:<NothingFound></NothingFound>
-      }
-    ]
+        path: "/dashboard/*",
+        element: <NothingFound></NothingFound>,
+      },
+    ],
   },
   {
-    path:'*',
-    element:<NothingFound></NothingFound>
-  }
+    path: "*",
+    element: <NothingFound></NothingFound>,
+  },
 ]);
 export default router;

@@ -1,8 +1,6 @@
 import React from "react";
-// import useTitle from "../../Utilities/Utilities";
 // blog page show blog
 const Blog = () => {
-  // useTitle("Photo Prince - Blog");
   return (
     <div>
       <div className="border-2 px-14 py-8 m-6 w-3/4 mx-auto shadow-xl">
@@ -29,11 +27,10 @@ const Blog = () => {
           What is a unit test? Why should we write unit tests?
         </h3>
         <p>
-          The main objective of unit testing is to isolate written code to test
-          and determine if it works as intended. Unit testing is an important
-          step in the development process, because if done correctly, it can
-          help detect early flaws in code which may be more difficult to find in
-          later testing stages
+          Unit Testing is a testing method that tests an individual unit of
+          software in isolation. Unit testing for React Apps means testing an
+          individual React Component. “Unit testing is a great discipline, which
+          can lead to 40% - 80% reductions in bug density.” - Eric Elliot
         </p>
       </div>
       <div className="border-2 px-14 py-8  m-6 w-3/4 mx-auto shadow-xl">

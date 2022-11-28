@@ -9,7 +9,7 @@ const Footer = () => {
           src="https://i.ibb.co/RQ5LjS6/M-1-removebg-preview.png"
           alt=""
         />
-        <p>MOBILEBAZZAR.COM</p>
+        <p>MOBILE BAZZAR</p>
       </div>
       <div>
         <span className="footer-title">Social</span>

@@ -1,39 +1,35 @@
 import React from "react";
 import { useContext } from "react";
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../ContextProvider/AuthProvider";
 
 const Navbar = () => {
-  const {user,logOut} = useContext(AuthContext)
+  const { user, logOut } = useContext(AuthContext);
   const user1 = true;
   const user2 = false;
   const user3 = false;
   // const user = false;
   const navItems = (
     <>
-     
-    
-       
-  
-   
-     
       <li>
-        <Link to={'/'}>Home</Link>
+        <Link to={"/"}>Home</Link>
       </li>
       <li>
-        <Link to={'/dashboard'}>Dashboard</Link>
+        <Link to={"/dashboard"}>Dashboard</Link>
       </li>
       <li>
-        <Link to={'/blog'}>Blogs</Link>
+        <Link to={"/blog"}>Blogs</Link>
       </li>
-      {user?.uid ? <li>
-        <button onClick={logOut}>Logout</button>
-      </li>
-      :
-      <li>
-        <Link to={'/login'}>Login</Link>
-      </li>}
+      {user?.uid ? (
+        <li>
+          <button onClick={logOut}>Logout</button>
+        </li>
+      ) : (
+        <li>
+          <Link to={"/login"}>Login</Link>
+        </li>
+      )}
     </>
   );
   return (
@@ -60,21 +56,22 @@ const Navbar = () => {
             tabIndex={0}
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
-             {navItems}
+            {navItems}
           </ul>
         </div>
-        <Link to={'/'} className="btn btn-ghost normal-case text-xl">
-          <img className="h-16 w-20" src="https://i.ibb.co/RQ5LjS6/M-1-removebg-preview.png" alt="" />
+        <Link to={"/"} className="btn btn-ghost normal-case text-xl">
+          <img
+            className="h-16 w-20"
+            src="https://i.ibb.co/RQ5LjS6/M-1-removebg-preview.png"
+            alt=""
+          />
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal mx-5 p-0">
-          {navItems}
-          
-        </ul>
+        <ul className="menu menu-horizontal mx-5 p-0">{navItems}</ul>
       </div>
-    
-     <label
+
+      <label
         htmlFor="dashboard-drawer"
         tabIndex={2}
         className="btn btn-ghost lg:hidden"

@@ -13,20 +13,17 @@ const CheckoutForm = ({ data }) => {
     buyerName,
     buyerEmail,
     paid,
-    _id
+    _id,
   } = data;
-  
+
   const stripe = useStripe();
   const elements = useElements();
   useEffect(() => {
-    fetch(
-      "http://localhost:5000/create-payment-intent",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productPrice }),
-      }
-    )
+    fetch("https://mobiledazzar.vercel.app/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productPrice }),
+    })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
   }, []);
@@ -46,8 +43,8 @@ const CheckoutForm = ({ data }) => {
     });
 
     if (error) {
-        toast.error(error.message);
-    } 
+      toast.error(error.message);
+    }
     setProcessing(true);
     setTransactionId("");
     const { paymentIntent, error: confirmError } =
@@ -61,8 +58,8 @@ const CheckoutForm = ({ data }) => {
         },
       });
     if (confirmError) {
-        toast.error(confirmError.message);
-        setProcessing(false);
+      toast.error(confirmError.message);
+      setProcessing(false);
     }
     if (paymentIntent.status === "succeeded") {
       const paymentInfo = {
@@ -73,18 +70,19 @@ const CheckoutForm = ({ data }) => {
         productId,
         productName,
       };
-      fetch("http://localhost:5000/payment", {
+      fetch("https://mobiledazzar.vercel.app/payment", {
         method: "POST",
-        headers: { "Content-Type": "application/json" ,
-        authorization: `bearer ${localStorage.getItem("token")}`,
-      },
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `bearer ${localStorage.getItem("token")}`,
+        },
         body: JSON.stringify(paymentInfo),
       })
         .then((res) => res.json())
         .then((data) => {
-            setTransactionId(paymentIntent.id);
-            toast.success("Your payment completed !");
-            setProcessing(false);
+          setTransactionId(paymentIntent.id);
+          toast.success("Your payment completed !");
+          setProcessing(false);
         });
     }
   };

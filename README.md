@@ -1,3 +1,66 @@
+
+# MOBILE HAZZAR
+
+MOBILE HAZZAR is a websit where buyer can buy a used mobile amd seller can sell his/hsr used mobile
+
+
+## 🔗 Links
+[![portfolio](https://i.ibb.co/RQ5LjS6/M-1-removebg-preview.png)](https://mobilebazzardotcom.web.app/)
+
+
+## Features
+
+- User can signup and login by email password and google
+- seller can  Add his/hes  product
+- seller can see all products 
+- seller can advertise thi/her  products 
+- buyer can see all his/her booked products 
+- buyer can book a product
+- buyer can pay his/her booked product
+- User can add a new service  
+- admin can see and delete a buyer,saller and reported product
+
+## API Reference
+
+#### Get all items
+
+```http
+ https://mobiledazzar.vercel.app/
+```
+
+
+
+
+
+
+
+
+## 🚀 About Me
+I'm a full stack developer...
+
+
+![Logo](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGuWrfLHbMlkXKF8uj7G7Bs98zmNZVW26YgRmGktRA3w&s)
+
+
+
+[Guthub](https://github.com/Rifat7432)
+
+
+
+# adminEmail: admin@gmail.com
+# adminPassword: 123456
+
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

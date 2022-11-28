@@ -17,14 +17,10 @@ const Login = () => {
   const form = location.state?.from.pathname || "/";
   const { signUpByGoogle, login, user, logOut } = useContext(AuthContext);
   const getToken = (email) => {
-    fetch(`http://localhost:5000/jwt?email=${email}`)
+    fetch(`https://mobiledazzar.vercel.app/jwt?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire(
-          'successful',
-          'Login successful.',
-          'success'
-        )
+        Swal.fire("successful", "Login successful.", "success");
         navigate(form, { replace: true });
         reset({
           email: "",
@@ -47,30 +43,30 @@ const Login = () => {
   };
   const handleError = () => {
     if (errors) {
-       if (errors.email) {
+      if (errors.email) {
         return toast.error(errors.email.message);
       } else if (errors.password) {
         return toast.error(errors.password.message);
       }
     }
   };
-  const addUser = (email, name, role,img) => {
+  const addUser = (email, name, role, img) => {
     let user = {
       email,
       name,
       role,
-      userImg:img,
-      verified:false
+      userImg: img,
+      verified: false,
     };
-    if(role === 'Buyer'){
+    if (role === "Buyer") {
       user = {
         email,
         name,
         role,
-        userImg:img,
-      }
+        userImg: img,
+      };
     }
-    fetch("http://localhost:5000/users", {
+    fetch("https://mobiledazzar.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -80,12 +76,9 @@ const Login = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
-          
           getToken(email);
         }
-      })
-      
-      
+      });
   };
   const gooLogin = () => {
     Swal.fire({
@@ -102,12 +95,11 @@ const Login = () => {
           .then((result) => {
             const user = result.user;
             addUser(user?.email, user?.displayName, "Buyer", user?.photoURL);
-           
           })
           .catch((error) => {});
       }
     });
-  }
+  };
   return (
     <div className="hero py-10">
       <div className="hero-content flex-col lg:flex-row">
@@ -130,6 +122,9 @@ const Login = () => {
                 className="input input-bordered w-full "
                 {...register("email", { required: "Enter your email" })}
               />
+              {errors?.email && (
+                <p className="text-red-500">{errors?.email?.message}</p>
+              )}
             </div>
             <div className="form-control">
               <label className="label">
@@ -139,6 +134,9 @@ const Login = () => {
                 className="input input-bordered w-full "
                 {...register("password", { required: "Enter your password" })}
               />
+              {errors?.password && (
+                <p className="text-red-500">{errors?.password?.message}</p>
+              )}
               <label className="label">
                 <Link className="label-text-alt link link-hover">
                   Forgot password?
@@ -146,7 +144,9 @@ const Login = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-              <button onClick={handleError} className="btn myButton">Login</button>
+              <button onClick={handleError} className="btn myButton">
+                Login
+              </button>
             </div>
           </form>
           <div>

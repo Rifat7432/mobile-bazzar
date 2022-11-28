@@ -16,7 +16,7 @@ const SellerTableBody = ({ user, i, refetch }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/users/${user?._id}`, {
+        fetch(`https://mobiledazzar.vercel.app/users/${user?._id}`, {
           method: "DELETE",
           headers: {
             authorization: `bearer ${localStorage.getItem("token")}`,
@@ -35,16 +35,18 @@ const SellerTableBody = ({ user, i, refetch }) => {
     });
   };
   const verify = () => {
-    fetch(`http://localhost:5000/users/${email}`, {
+    fetch(`https://mobiledazzar.vercel.app/users/${email}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify({ verified: true }),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
+          refetch();
           toast.success("Seller verified successfully");
         }
       });

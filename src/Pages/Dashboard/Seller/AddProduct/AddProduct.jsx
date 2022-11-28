@@ -13,7 +13,9 @@ const AddProduct = () => {
   useEffect(() => {
     if (user?.email) {
       fetch(
-        `http://localhost:5000/seller?email=${user?.email}&role=${"Seller"}`
+        `https://mobiledazzar.vercel.app/seller?email=${
+          user?.email
+        }&role=${"Seller"}`
       )
         .then((res) => res.json())
         .then((data) => steSeller(data));
@@ -26,7 +28,7 @@ const AddProduct = () => {
     reset,
   } = useForm();
   const postData = (data) => {
-    fetch("http://localhost:5000/products", {
+    fetch("https://mobiledazzar.vercel.app/products", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -107,7 +109,8 @@ const AddProduct = () => {
             email: user?.email,
             status: "available",
             sellerVerified: seller?.verified,
-            report:false 
+            report: false,
+            advertise: false,
           };
           postData(product);
         }
@@ -116,42 +119,10 @@ const AddProduct = () => {
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
-      fetch(`http://localhost:5000/categories`).then((res) => res.json()),
+      fetch(`https://mobiledazzar.vercel.app/categories`).then((res) =>
+        res.json()
+      ),
   });
-  console.log(errors);
-  useEffect( () => {
-    console.log(errors);
-
-    if (errors) {
-      console.log(errors);
-
-      if (errors.location) {
-        return toast.error(errors.location.message);
-      }
-      if (errors.phoneNumber) {
-        return toast.error(errors.phoneNumber.message);
-      }
-      if (errors.originalPrice) {
-        return toast.error(errors.originalPrice.message);
-      }
-      if (errors.resalePrice) {
-        return toast.error(errors.resalePrice.message);
-      }
-      if (errors.productName) {
-        return toast.error(errors.productName.message);
-      }
-      if (errors.useYears) {
-        return toast.error(errors.useYears.message);
-      }
-      if (errors.img) {
-        return toast.error(errors.img.message);
-      }
-      if (errors.purchase) {
-        return toast.error(errors.purchase.message);
-      }
-    }
-  },[errors]
-  )
   return (
     <div>
       <form
@@ -197,6 +168,9 @@ const AddProduct = () => {
               className="input input-bordered mb-5 bg-white input-ghost w-full "
               {...register("location", { required: "Enter your location" })}
             />
+            {errors?.location && (
+              <p className="text-red-500">{errors?.location?.message}</p>
+            )}
           </div>
           <div className="form-control w-full ">
             <label className="label">
@@ -208,6 +182,9 @@ const AddProduct = () => {
               className="input input-bordered mb-5 bg-white input-ghost w-full "
               {...register("phoneNumber", { required: "Enter your number" })}
             />
+            {errors?.phoneNumber && (
+              <p className="text-red-500">{errors?.phoneNumber?.message}</p>
+            )}
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
@@ -223,6 +200,9 @@ const AddProduct = () => {
                 required: "Enter your original price",
               })}
             />
+            {errors?.originalPrice && (
+              <p className="text-red-500">{errors?.originalPrice?.message}</p>
+            )}
           </div>
           <div className="form-control w-full ">
             <label className="label">
@@ -236,6 +216,9 @@ const AddProduct = () => {
                 required: "Enter your resale price",
               })}
             />
+            {errors?.resalePrice && (
+              <p className="text-red-500">{errors?.resalePrice?.message}</p>
+            )}
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
@@ -251,6 +234,9 @@ const AddProduct = () => {
                 required: "Enter your product name",
               })}
             />
+            {errors?.productName && (
+              <p className="text-red-500">{errors?.productName?.message}</p>
+            )}
           </div>
           <div className="form-control w-full ">
             <label className="label">
@@ -264,6 +250,9 @@ const AddProduct = () => {
                 required: "Enter your year of using",
               })}
             />
+            {errors?.useYears && (
+              <p className="text-red-500">{errors?.useYears?.message}</p>
+            )}
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
@@ -277,6 +266,9 @@ const AddProduct = () => {
               className="input input-bordered mb-5 bg-white input-ghost w-full "
               {...register("img", { required: "Enter your product picture" })}
             />
+            {errors?.img && (
+              <p className="text-red-500">{errors?.img?.message}</p>
+            )}
           </div>
           <div className="form-control w-full ">
             <label className="label">
@@ -289,6 +281,9 @@ const AddProduct = () => {
               type="Date"
               className="input input-bordered mb-5 bg-white input-ghost w-full "
             />
+            {errors?.purchase && (
+              <p className="text-red-500">{errors?.purchase?.message}</p>
+            )}
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
@@ -333,11 +328,7 @@ const AddProduct = () => {
           className="textarea textarea-bordered mb-5 h-36 w-full"
           placeholder="Product Description"
         ></textarea>
-        <button
-          className="btn myButton ml-auto py-4 px-5 flex"
-        >
-          Post
-        </button>
+        <button className="btn myButton ml-auto py-4 px-5 flex">Post</button>
       </form>
     </div>
   );

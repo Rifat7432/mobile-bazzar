@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -17,14 +18,10 @@ const SignUp = () => {
   const { signUpByGoogle, signUp, updateUser, removeUser } =
     useContext(AuthContext);
   const getToken = (email) => {
-    fetch(`http://localhost:5000/jwt?email=${email}`)
+    fetch(`https://mobiledazzar.vercel.app/jwt?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
-        Swal.fire(
-          'successful',
-          'sign up successful.',
-          'success'
-        )
+        Swal.fire("successful", "sign up successful.", "success");
         localStorage.setItem("token", data.accessToken);
         reset({
           email: "",
@@ -56,7 +53,7 @@ const SignUp = () => {
         userImg: img,
       };
     }
-    fetch("http://localhost:5000/users", {
+    fetch("https://mobiledazzar.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -105,22 +102,6 @@ const SignUp = () => {
       });
   };
 
-  useEffect(() => {
-    if (errors) {
-      if (errors.name) {
-        return toast.error(errors.name.message);
-      }
-      if (errors.email) {
-        return toast.error(errors.email.message);
-      }
-      if (errors.password) {
-        return toast.error(errors.password.message);
-      }
-      if (errors.userImg) {
-        return toast.error(errors.userImg.message);
-      }
-    }
-  }, [errors]);
   const gooLogin = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -136,7 +117,6 @@ const SignUp = () => {
           .then((result) => {
             const user = result.user;
             addUser(user?.email, user?.displayName, "Buyer", user?.photoURL);
-           
           })
           .catch((error) => {});
       }
@@ -164,17 +144,24 @@ const SignUp = () => {
                 className="input input-bordered w-full "
                 {...register("name", { required: "Enter your name" })}
               />
+              {errors?.name && (
+                <p className="text-red-500">{errors?.name?.message}</p>
+              )}
             </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">email</span>
               </label>
               <input
+                type={"email"}
                 className="input input-bordered w-full"
                 {...register("email", {
                   required: "Enter Your email",
                 })}
               />
+              {errors?.email && (
+                <p className="text-red-500">{errors?.email?.message}</p>
+              )}
             </div>
 
             <div className="form-control w-full ">
@@ -182,9 +169,13 @@ const SignUp = () => {
                 <span className="label-text">Password</span>
               </label>
               <input
+                type={"password"}
                 className="input input-bordered w-full "
                 {...register("password", { required: "Enter your password" })}
               />
+              {errors?.password && (
+                <p className="text-red-500">{errors?.password?.message}</p>
+              )}
             </div>
             <div className="form-control w-full ">
               <label className="label">
@@ -210,6 +201,9 @@ const SignUp = () => {
                 className="input input-bordered w-full "
                 {...register("userImg", { required: "Upload your image" })}
               />
+              {errors?.userImg && (
+                <p className="text-red-500">{errors?.userImg?.message}</p>
+              )}
             </div>
             <div className="form-control mt-6">
               <button className="btn myButton">SignUp</button>
