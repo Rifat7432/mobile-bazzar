@@ -26,7 +26,7 @@ const MyProduct = () => {
       return data;
     },
   });
-  console.log(products);
+
   return (
     <div className="mt-16">
       {isLoading ? (

@@ -11,7 +11,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 const CategoryProductCard = ({ product, setModalData, refetch }) => {
-  console.log(product);
+
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);

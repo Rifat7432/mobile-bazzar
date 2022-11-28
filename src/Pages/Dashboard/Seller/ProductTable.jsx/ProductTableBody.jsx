@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 
 const ProductTableBody = ({ product, i, refetch }) => {
   const { img, productName, resalePrice, status, _id, advertise } = product;
-  console.log(product);
+
 
   const advertiseProduct = () => {
     fetch(`https://mobiledazzar.vercel.app/product/${_id}`, {
@@ -44,7 +44,6 @@ const ProductTableBody = ({ product, i, refetch }) => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
             Swal.fire("Deleted!", ` Product  has been deleted.`, "success");
             refetch();
           });

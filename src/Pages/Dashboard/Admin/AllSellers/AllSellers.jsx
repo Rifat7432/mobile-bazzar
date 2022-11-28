@@ -24,7 +24,7 @@ const AllSellers = () => {
       return data;
     },
   });
-  console.log(sellers);
+
   return (
     <div className="mt-16 ">
       {isLoading ? (

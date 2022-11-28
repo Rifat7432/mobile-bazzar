@@ -19,7 +19,7 @@ const CategorySection = () => {
       <h1 className="my-5 text-5xl font-bold">Categories</h1>
       <div className="grid grid-col-1 md:grid-cols-2 py-5 gap-4 md:gap-16">
         {categories.map((category) => (
-          <div className="shadow-xl rounded-xl bg-slate-200 w-3/4 sm:w-80  mx-auto">
+          <div key={category._id} className="shadow-xl rounded-xl bg-slate-200 w-3/4 sm:w-80  mx-auto">
             <Link
               to={`/category/${category._id}`}
               className="mx-4 btn-ghost  my-2 categoryText "
