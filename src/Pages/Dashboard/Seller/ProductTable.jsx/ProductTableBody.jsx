@@ -13,6 +13,7 @@ const ProductTableBody = ({ product, i, refetch }) => {
       method: "PUT",
       headers: {
         "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify({ advertise: true }),
     })

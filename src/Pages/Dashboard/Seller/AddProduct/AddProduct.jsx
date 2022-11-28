@@ -30,6 +30,7 @@ const AddProduct = () => {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        authorization: `bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(data),
     })
@@ -106,6 +107,7 @@ const AddProduct = () => {
             email: user?.email,
             status: "available",
             sellerVerified: seller?.verified,
+            report:false 
           };
           postData(product);
         }
@@ -153,7 +155,7 @@ const AddProduct = () => {
   return (
     <div>
       <form
-        className="my-10 shadow-2xl w-11/12 mx-auto rounded-xl p-10"
+        className="mt-16 shadow-2xl w-11/12 mx-auto rounded-xl p-10"
         onSubmit={handleSubmit(handleAddProduct)}
       >
         <p className="text-3xl  font-bold">

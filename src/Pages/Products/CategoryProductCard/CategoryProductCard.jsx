@@ -1,10 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import toast from "react-hot-toast";
-import { FaEllipsisH, FaCheck, FaExclamationCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaEllipsisH, FaCheck, FaExclamationCircle ,FaHeart} from "react-icons/fa";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const CategoryProductCard = ({ product, setModalData ,refetch}) => {
+  console.log(product)
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+  
   const {
     img,
     SellerName,
@@ -40,6 +46,7 @@ const CategoryProductCard = ({ product, setModalData ,refetch}) => {
         method: "PUT",
         headers: {
           "content-type": "application/json",
+          authorization: `bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({ reported: true }),
       })
@@ -54,8 +61,9 @@ const CategoryProductCard = ({ product, setModalData ,refetch}) => {
       return toast.success(`${productName} reported successfully`);
     }
   };
+ 
   return (
-    <div className="card card-compact bg-base-100 shadow-2xl">
+    <div data-aos="flip-left"  className="card card-compact bg-base-100 shadow-2xl">
       <div className="p-5">
         <div className="flex items-center">
           <div>
@@ -82,13 +90,14 @@ const CategoryProductCard = ({ product, setModalData ,refetch}) => {
               )}
             </div>
             <div className="flex">
-              <h4>{location} ,</h4>
+
               <h4>{date}</h4>
             </div>
           </div>
 
-          <div className="flex mr-5">
-            <div className="dropdown ">
+          <div className="flex items-center mr-4">
+          
+            <div className="dropdown dropdown-end">
               <label tabIndex={1} className="btn btn-ghost avatar">
                 <FaEllipsisH></FaEllipsisH>
               </label>
@@ -121,6 +130,7 @@ const CategoryProductCard = ({ product, setModalData ,refetch}) => {
           Original price : {originalPrice} tk
         </p>
         <p className="text-lg font-normal">Used : {useYears} year</p>
+        <p className="text-lg font-normal">Location : {location} </p>
 
         <label
           onClick={manageModal}

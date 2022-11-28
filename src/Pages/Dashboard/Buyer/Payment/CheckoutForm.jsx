@@ -75,7 +75,9 @@ const CheckoutForm = ({ data }) => {
       };
       fetch("http://localhost:5000/payment", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" ,
+        authorization: `bearer ${localStorage.getItem("token")}`,
+      },
         body: JSON.stringify(paymentInfo),
       })
         .then((res) => res.json())

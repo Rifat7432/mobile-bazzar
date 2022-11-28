@@ -2,11 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../../../ContextProvider/AuthProvider';
+import Loader from '../../../Shered/Loader/Loader';
 import ProductTable from '../ProductTable.jsx/ProductTable';
 
 const MyProduct = () => {
     const {user}=useContext(AuthContext)
-    const { data: products = [] ,refetch} = useQuery({
+    const { data: products = [] ,refetch ,isLoading} = useQuery({
         queryKey: ["products",user?.email],
         queryFn: async () => {
           const res = await fetch(
@@ -23,8 +24,8 @@ const MyProduct = () => {
       });
       console.log(products)
     return (
-        <div className='pt-5'>    
-                { products.length > 0 ?  <ProductTable products={products} refetch={refetch}></ProductTable> : <h1 className='text-4xl mt-32 font-semibold  text-center'>no product found</h1>}
+        <div className='mt-16'>    
+               {isLoading ? <Loader></Loader> : <div>{ products.length > 0 ?  <ProductTable products={products} refetch={refetch}></ProductTable> : <h1 className='text-4xl mt-32 font-semibold  text-center'>no product found</h1>}</div>}
             
         </div>
     );

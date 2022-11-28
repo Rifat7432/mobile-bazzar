@@ -15,6 +15,8 @@ import CategoryProducts from "../Pages/Products/CategoryProducts/CategoryProduct
 import SignUp from "../Pages/Signup/SignUp";
 import AdminRoute from "./AdminRoute";
 import Private from "./Private"
+import Blog from "../Pages/Blog/Blog"
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 const { createBrowserRouter } = require("react-router-dom");
 
@@ -22,6 +24,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement:<ErrorPage></ErrorPage>,
     children: [
       {
         path: "/category/:id",
@@ -39,11 +42,16 @@ const router = createBrowserRouter([
         path: "/signup",
         element: <SignUp></SignUp>,
       },
+      {
+        path: "/blog",
+        element: <Blog></Blog>,
+      },
     ],
   },
   {
     path:'/dashboard',
     element:<Private><Dashboard></Dashboard></Private>,
+    errorElement:<ErrorPage></ErrorPage>,
     children:[
       {
         path:'/dashboard',
@@ -75,9 +83,13 @@ const router = createBrowserRouter([
       },
       {
         path:'/dashboard/payment/:id',
-        element:<Payment></Payment>,
+        element:<Private><Payment></Payment></Private>,
         loader:({params})=>{
-          return fetch(`http://localhost:5000/orderPayment/${params.id}`)
+          return fetch(`http://localhost:5000/orderPayment/${params.id}`, {
+                  headers: {
+                    authorization: `bearer ${localStorage.getItem("token")}`,
+                  },
+                });
         }
       },
       {

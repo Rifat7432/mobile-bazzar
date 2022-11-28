@@ -11,8 +11,8 @@ const Advertised = ({advertiseProducts}) => {
       const [modalData,setModalData] = useState(null)
       return (
          <>
-         <div className='p-5'>
-            <h1 className='text-4xl font-bold'>Check out our special product  </h1>
+         <div className='mt-20'>
+            <h1 className='text-5xl font-bold'>Special product  </h1>
          </div>
           <div className='grid grid-cols-1 mt-5 pb-5 w-11/12 mx-auto  sm:grid-cols-2 lg:grid-cols-3 gap-6'>
               {
